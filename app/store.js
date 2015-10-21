@@ -1,40 +1,31 @@
 import $ from 'jquery';
 import Backbone from 'backbone';
 
-let recipes;
+let favorites;
 
 $.ajaxSetup({
   beforeSend(xhr, options) {
     if(options.url.match(/api.parse.com/)) {
-      xhr.setRequestHeader('X-Parse-Application-Id', 'xR0Bhh88xR6hkxv6q8p1YUJaJYBXQM3dA01XusCc');
-      xhr.setRequestHeader('X-Parse-REST-API-Key', 'f0OGjDzDvjj4V4XFlayTeGV406RRlIo0a6APSEBI');
+      xhr.setRequestHeader('X-Parse-Application-Id', 'cqhizBKK5iWlCpLhuxeaFOeZgkPvHFQgLvDWQWAz');
+      xhr.setRequestHeader('X-Parse-REST-API-Key', 'cUhIJYNjs2h0oQfFPfW4MYF5QuGxgz43I47v2I65');
     }
-  }
-})
-
-const Recipe = Backbone.Model.extend({
-  idAttribute: "objectId",
-  defaults() {
-    return {
-      ingredients: []
-    };
   }
 });
 
-const RecipesCollection = Backbone.Collection.extend({
-  url: "https://api.parse.com/1/classes/Recipe",
-  model: Recipe,
+const Favorite = Backbone.Model.extend({
+  idAttribute: "objectId",
+});
+
+const FavoritesCollection = Backbone.Collection.extend({
+  url: "https://api.parse.com/1/classes/Favorite",
+  model: Favorite,
   parse(response) {
     return response.results;
   }
 });
 
 export default {
-  getRecipeCollection(){
-    return (recipes = recipes || new RecipesCollection())
+  getFavoritesCollection(){
+    return (favorites = favorites || new FavoritesCollection())
   },
-
-  getNewRecipe() {
-    return new Recipe();
-  }
 };
